@@ -3,232 +3,666 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Où voyageriez-vous ? - IA Temporal</title>
+    <title>IA Temporal - Voyage Temporel</title>
     <style>
-        /* --- STYLE GLOBAL & FOND --- */
-        body {
-            background-color: #010409;
-            color: #ffffff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+        /* --- RESET & STYLE GLOBAL --- */
+        * {
+            box-sizing: border-box;
             margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #020617;
+            color: #f8fafc;
+            font-family: 'Cinzel', 'Georgia', 'Times New Roman', serif;
+            line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        /* --- LE CONTENEUR PRINCIPAL (BLOC BLEU NUIT) --- */
+        /* --- NAVIGATION --- */
+        nav {
+            display: block;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: right;
+        }
+        .nav-link {
+            color: #94a3b8;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .nav-btn {
+            border: 1px solid #fbbf24;
+            color: #fbbf24;
+            padding: 8px 16px;
+            border-radius: 4px;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            text-align: center;
+            padding: 100px 20px;
+            background: radial-gradient(circle, rgba(3,105,161,0.2) 0%, rgba(2,6,23,0) 70%);
+        }
+        .hero h1 {
+            font-size: 42px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+        .hero p {
+            color: #94a3b8;
+            max-width: 600px;
+            margin: 0 auto 40px auto;
+            font-size: 16px;
+            font-family: sans-serif;
+        }
+        .hero-btns {
+            text-align: center;
+        }
+        .btn-gold {
+            background: #fbbf24;
+            color: #000;
+            border: none;
+            padding: 12px 28px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            margin-right: 15px;
+            font-size: 13px;
+        }
+        .btn-outline {
+            background: transparent;
+            color: #fff;
+            border: 1px solid #475569;
+            padding: 12px 28px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        /* --- SECTION 2: CARTES --- */
+        .section-title {
+            text-align: center;
+            text-transform: uppercase;
+            font-size: 12px;
+            color: #fbbf24;
+            letter-spacing: 3px;
+            margin-top: 60px;
+            margin-bottom: 10px;
+        }
+        .section-main-title {
+            text-align: center;
+            text-transform: uppercase;
+            font-size: 28px;
+            letter-spacing: 2px;
+            margin-bottom: 40px;
+        }
+        .cards-container {
+            display: table;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto 80px auto;
+            border-collapse: separate;
+            border-spacing: 20px;
+        }
+        .card-cell {
+            display: table-cell;
+            width: 33.33%;
+            background: #0f172a;
+            border: 1px solid #1e293b;
+            vertical-align: top;
+        }
+        .card-img-placeholder {
+            height: 250px;
+            background: linear-gradient(to bottom, #1e293b, #0f172a);
+            position: relative;
+        }
+        .card-img-1 { background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400') center/cover; }
+        .card-img-2 { background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1448375240586-882707db888b?w=400') center/cover; }
+        .card-img-3 { background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=400') center/cover; }
+        
+        .card-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(0,0,0,0.7);
+            border: 1px solid #fbbf24;
+            color: #fbbf24;
+            padding: 4px 8px;
+            font-size: 10px;
+            text-transform: uppercase;
+        }
+        .card-content {
+            padding: 20px;
+        }
+        .card-content h3 {
+            font-size: 18px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        .card-content p {
+            color: #94a3b8;
+            font-size: 13px;
+            font-family: sans-serif;
+            margin-bottom: 20px;
+        }
+        .card-btn {
+            width: 100%;
+            background: transparent;
+            border: 1px solid #fbbf24;
+            color: #fbbf24;
+            padding: 10px;
+            text-transform: uppercase;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        /* --- STATS BAR --- */
+        .stats-bar {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid #1e293b;
+            border-bottom: 1px solid #1e293b;
+            max-width: 1200px;
+            margin: 0 auto 80px auto;
+        }
+        .stat-item {
+            display: inline-block;
+            width: 22%;
+            text-align: center;
+        }
+        .stat-num {
+            font-size: 24px;
+            color: #fbbf24;
+            margin-bottom: 5px;
+        }
+        .stat-label {
+            font-size: 11px;
+            color: #64748b;
+            text-transform: uppercase;
+        }
+
+        /* --- DASHBOARD INTERACTIF --- */
+        .dashboard-section {
+            max-width: 1000px;
+            margin: 0 auto 80px auto;
+            padding: 0 20px;
+        }
         .interface-container {
             background: linear-gradient(145deg, #020617, #030712);
             border: 2px solid #00d2ff;
             border-radius: 12px;
-            box-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
-            padding: 30px;
-            width: 900px;
-            max-width: 95%;
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.2);
+            padding: 40px 30px;
         }
-
         .interface-title {
             text-align: center;
-            font-size: 24px;
+            font-size: 14px;
             text-transform: uppercase;
             letter-spacing: 2px;
-            margin-bottom: 30px;
-            color: #f8fafc;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            margin-bottom: 35px;
+            color: #00d2ff;
         }
-
-        /* --- GRILLE À 3 COLONNES --- */
         .grid-layout {
             display: grid;
             grid-template-columns: 1fr 1fr 1.2fr;
             gap: 25px;
         }
-
         .column-title {
             text-align: center;
-            font-size: 14px;
+            font-size: 13px;
             text-transform: uppercase;
             color: #94a3b8;
-            margin-bottom: 5px;
-            letter-spacing: 1px;
-        }
-
-        .column-subtitle {
-            text-align: center;
-            font-size: 12px;
-            text-transform: uppercase;
-            color: #64748b;
             margin-bottom: 15px;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #1e293b;
+            padding-bottom: 5px;
         }
-
-        /* --- BOUTONS ÉTAPES 1 & 2 --- */
         .btn-list {
             display: flex;
             flex-direction: column;
             gap: 15px;
         }
-
         .step-btn {
-            background: linear-gradient(180deg, #0b1528, #050b14);
+            background: rgba(15, 23, 42, 0.6);
             border: 1px solid #1e293b;
             border-radius: 6px;
-            padding: 15px 20px;
+            padding: 15px;
             display: flex;
             align-items: center;
-            gap: 15px;
+            justify-content: center;
+            gap: 10px;
             cursor: pointer;
-            transition: all 0.3s ease;
             color: #94a3b8;
-            font-weight: bold;
-            font-size: 14px;
+            font-size: 13px;
             text-transform: uppercase;
         }
-
-        /* Effet au survol (Hover) */
-        .step-btn:hover {
-            border-color: #38bdf8;
-            box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
-            color: #fff;
-        }
-
-        /* État Sélectionné / Actif (Reflet Doré comme sur l'image) */
         .step-btn.active {
             border-color: #fbbf24;
-            box-shadow: 0 0 15px rgba(251, 191, 36, 0.4), inset 0 0 10px rgba(251, 191, 36, 0.1);
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.3);
             color: #fbbf24;
+            background: rgba(251, 191, 36, 0.05);
         }
-
-        /* --- ENCADRÉ RÉSULTAT IA (À DROITE) --- */
         .result-box {
             border: 2px solid #fbbf24;
             border-radius: 8px;
             padding: 20px;
-            background: rgba(2, 6, 23, 0.8);
-            box-shadow: 0 0 15px rgba(251, 191, 36, 0.15);
+            background: rgba(2, 6, 23, 0.9);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
-
         .result-header {
             text-align: center;
             font-weight: bold;
             color: #fbbf24;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 20px;
+            font-size: 13px;
+            margin-bottom: 15px;
         }
-
         .ia-status-container {
-            background: rgba(5, 11, 20, 0.6);
+            background: rgba(5, 11, 20, 0.8);
             border: 1px solid #1e293b;
             border-radius: 6px;
             padding: 15px;
-            margin-bottom: 20px;
         }
-
         .status-line {
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 12px;
+            font-size: 11px;
             color: #e2e8f0;
-            font-weight: bold;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
-
-        /* Voyant lumineux clignotant */
         .indicator-light {
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             background-color: #f59e0b;
-            border-radius: 3px;
+            border-radius: 5px;
             box-shadow: 0 0 8px #f59e0b;
-            animation: pulse 1.5s infinite alternate;
         }
-
-        @keyframes pulse {
-            from { opacity: 0.4; box-shadow: 0 0 2px #f59e0b; }
-            to { opacity: 1; box-shadow: 0 0 12px #f59e0b; }
-        }
-
         .ia-text {
             font-size: 12px;
             color: #94a3b8;
+            font-family: sans-serif;
             line-height: 1.5;
         }
-
-        /* --- BOUTON D'ACTION PRINCIPAL --- */
         .action-btn {
-            background: linear-gradient(180deg, #fbbf24, #d97706);
+            background: #fbbf24;
             border: none;
-            border-radius: 6px;
             color: #000;
             font-weight: bold;
             text-transform: uppercase;
-            padding: 15px;
+            padding: 12px;
             cursor: pointer;
+            margin-top: 15px;
             width: 100%;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 10px rgba(217, 119, 6, 0.3);
+            font-size: 12px;
         }
 
-        .action-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(251, 191, 36, 0.5);
+        /* --- SECTION CHRONOS --- */
+        .chronos-section {
+            max-width: 1100px;
+            margin: 0 auto 100px auto;
+            padding: 0 20px;
+            display: table;
+            width: 100%;
+        }
+        .chronos-left {
+            display: table-cell;
+            width: 50%;
+            vertical-align: middle;
+            padding-right: 40px;
+        }
+        .chronos-right {
+            display: table-cell;
+            width: 50%;
+            vertical-align: middle;
+        }
+        .chronos-left h2 {
+            font-size: 28px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+        .chronos-left p {
+            color: #94a3b8;
+            font-family: sans-serif;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .chronos-left ul {
+            list-style: none;
+            font-family: sans-serif;
+            font-size: 13px;
+            color: #e2e8f0;
+        }
+        .chronos-left ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+        .chronos-left ul li::before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            color: #fbbf24;
+        }
+        /* Chat UI Simulator */
+        .chat-box {
+            background: #0f172a;
+            border: 1px solid #1e293b;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .chat-header {
+            font-size: 13px;
+            text-transform: uppercase;
+            color: #fbbf24;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #1e293b;
+            padding-bottom: 10px;
+        }
+        .chat-msg {
+            background: #1e293b;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: sans-serif;
+            color: #cbd5e1;
+            margin-bottom: 20px;
+        }
+        .chat-input {
+            width: 100%;
+            background: #020617;
+            border: 1px solid #334155;
+            padding: 12px;
+            color: #fff;
+            font-size: 13px;
+            border-radius: 4px;
+        }
+
+        /* --- FORMULAIRE DE RÉSERVATION --- */
+        .booking-section {
+            max-width: 700px;
+            margin: 0 auto 100px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+        .booking-form {
+            background: #0f172a;
+            border: 1px solid #1e293b;
+            padding: 40px;
+            text-align: left;
+            border-radius: 8px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 11px;
+            text-transform: uppercase;
+            color: #94a3b8;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+        .form-input {
+            width: 100%;
+            background: #020617;
+            border: 1px solid #334155;
+            padding: 12px;
+            color: #fff;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            border-top: 1px solid #1e293b;
+            padding: 60px 20px;
+            background: #020617;
+        }
+        .footer-cols {
+            display: table;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .footer-col {
+            display: table-cell;
+            width: 25%;
+            vertical-align: top;
+        }
+        .footer-col h4 {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #fbbf24;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+        .footer-col ul {
+            list-style: none;
+        }
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+        .footer-col ul li a {
+            color: #64748b;
+            text-decoration: none;
+            font-size: 13px;
+            font-family: sans-serif;
+        }
+        .footer-bottom {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 11px;
+            color: #475569;
+            font-family: sans-serif;
         }
     </style>
 </head>
 <body>
 
-    <div class="interface-container">
-        <div class="interface-title">Où voyageriez-vous ?</div>
-        
-        <div class="grid-layout">
-            <!-- COLONNE ÉTAPE 1 -->
-            <div>
-                <div class="column-title">Étape 1</div>
-                <div class="column-subtitle">Type d'aventure</div>
-                <div class="btn-list">
-                    <div class="step-btn"><span>🎨 Art</span></div>
-                    <div class="step-btn active"><span>🏔️ Nature</span></div> <!-- Actif -->
-                    <div class="step-btn"><span>🧭 Action</span></div>
+    <nav>
+        <a href="#" class="nav-link">Accueil</a>
+        <a href="#" class="nav-link">Époques</a>
+        <a href="#" class="nav-link">IA Matcher</a>
+        <a href="#" class="nav-link nav-btn">Réserver</a>
+    </nav>
+
+    <section class="hero">
+        <h1>Le passé devient<br>votre prochaine destination</h1>
+        <p>Explorez les époques clés de l'humanité à travers des voyages temporels sécurisés, conçus pour les voyageurs les plus exigeants au monde.</p>
+        <div class="hero-btns">
+            <button class="btn-gold">Explorer les destinations →</button>
+            <button class="btn-outline">Planifier un voyage libre ⤗</button>
+        </div>
+    </section>
+
+    <section>
+        <div class="section-title">Époques mises en avant</div>
+        <div class="section-main-title">Choisissez votre époque</div>
+
+        <div class="cards-container">
+            <div class="card-cell">
+                <div class="card-img-placeholder card-img-1">
+                    <span class="card-badge">Égypte Antique</span>
+                </div>
+                <div class="card-content">
+                    <h3>L'Empire du Nil</h3>
+                    <p>Assistez à la construction des pyramides de Gizeh et rencontrez les grands pharaons de la XVIIIe dynastie.</p>
+                    <button class="card-btn">Découvrir l'époque</button>
                 </div>
             </div>
-
-            <!-- COLONNE ÉTAPE 2 -->
-            <div>
-                <div class="column-title">Étape 2</div>
-                <div class="column-subtitle">Activité favorite</div>
-                <div class="btn-list">
-                    <div class="step-btn active"><span>🔭 Explorer</span></div> <!-- Actif -->
-                    <div class="step-btn"><span>🏹 Chasser</span></div>
-                    <div class="step-btn"><span>🪶 Créer</span></div>
+            <div class="card-cell">
+                <div class="card-img-placeholder card-img-2">
+                    <span class="card-badge">Crétacé Supérieur</span>
+                </div>
+                <div class="card-content">
+                    <h3>Le Règne des Géants</h3>
+                    <p>Un safari préhistorique unique au monde. Observez la faune primitive et les prédateurs majeurs dans leur habitat.</p>
+                    <button class="card-btn">Découvrir l'époque</button>
                 </div>
             </div>
-
-            <!-- ENCADRÉ RÉSULTAT IA -->
-            <div class="result-box">
-                <div>
-                    <div class="result-header">Résultat IA</div>
-                    <div class="ia-status-container">
-                        <div class="status-line">
-                            <div class="indicator-light"></div>
-                            <span>IA ACTIVE</span>
-                        </div>
-                        <div class="ia-text">
-                            Analyse de vos préférences temporelles effectuée.<br><br>
-                            <strong>Destination idéale :</strong><br>
-                            Ère Jurassique — Observation de la faune primitive.
-                        </div>
-                    </div>
+            <div class="card-cell">
+                <div class="card-img-placeholder card-img-3">
+                    <span class="card-badge">Renaissance Italienne</span>
                 </div>
-                
-                <button class="action-btn">Réserver cette époque</button>
+                <div class="card-content">
+                    <h3>Le Siècle des Arts</h3>
+                    <p>Marchez dans les rues de Florence en 1492 aux côtés de Léonard de Vinci et des plus grands génies de l'histoire.</p>
+                    <button class="card-btn">Découvrir l'époque</button>
+                </div>
             </div>
         </div>
+    </section>
+
+    <div class="stats-bar">
+        <div class="stat-item"><div class="stat-num">142</div><div class="stat-label">Destinations Validées</div></div>
+        <div class="stat-item"><div class="stat-num">99.9%</div><div class="stat-label">Taux de Retour Temporel</div></div>
+        <div class="stat-item"><div class="stat-num">+4k</div><div class="stat-label">Voyageurs Historiques</div></div>
+        <div class="stat-item"><div class="stat-num">220</div><div class="stat-label">Chronologues Experts</div></div>
     </div>
+
+    <section class="dashboard-section">
+        <div class="interface-container">
+            <div class="interface-title">Où voyageriez-vous ?</div>
+            <div class="grid-layout">
+                <div>
+                    <div class="column-title">Étape 1 : Type</div>
+                    <div class="btn-list">
+                        <div class="step-btn"><span>🎨 Art & Culture</span></div>
+                        <div class="step-btn active"><span>🏔️ Nature Sauvage</span></div>
+                        <div class="step-btn"><span>🧭 Action / Conquêtes</span></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="column-title">Étape 2 : Activité</div>
+                    <div class="btn-list">
+                        <div class="step-btn active"><span>🔭 Explorer</span></div>
+                        <div class="step-btn"><span>🏹 Chasser</span></div>
+                        <div class="step-btn"><span>🪶 Créer</span></div>
+                    </div>
+                </div>
+                <div class="result-box">
+                    <div>
+                        <div class="result-header">Résultat IA</div>
+                        <div class="ia-status-container">
+                            <div class="status-line">
+                                <div class="indicator-light"></div>
+                                <span>IA CHRONOS ACTIVE</span>
+                            </div>
+                            <div class="ia-text">
+                                Préférences analysées.<br><br>
+                                <strong>Destination recommandée :</strong><br>
+                                Ère Jurassique — Safari d'observation primitif.
+                            </div>
+                        </div>
+                    </div>
+                    <button class="action-btn">Réserver cette époque</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="chronos-section">
+        <div class="chronos-left">
+            <div class="section-title" style="text-align: left; margin: 0;">Intelligence Artificielle</div>
+            <h2>Faites la connaissance de Chronos — Votre conseiller temporel personnel</h2>
+            <p>Notre IA de pointe analyse instantanément vos affinités psychologiques et vos aspirations d'aventure pour vous proposer l'époque exacte qui changera votre vie.</p>
+            <ul>
+                <li>Analyse fine de votre profil temporel sécurisé</li>
+                <li>Garantie de non-paradoxe lors du matching d'époque</li>
+                <li>Assistance continue 24/7 pendant votre saut</li>
+            </ul>
+        </div>
+        <div class="chronos-right">
+            <div class="chat-box">
+                <div class="chat-header">Chronos v4.2</div>
+                <div class="chat-msg">Bonjour ! D'après vos derniers choix, vous semblez fasciné par la nature vierge. Je vous suggère de regarder notre circuit Crétacé ou les forêts primordiales d'Europe centrale. Des questions ?</div>
+                <input type="text" class="chat-input" placeholder="Posez votre question temporelle à Chronos...">
+            </div>
+        </div>
+    </section>
+
+    <section class="booking-section">
+        <div class="section-title">Planification</div>
+        <div class="section-main-title">Réservez votre époque</div>
+        <div class="booking-form">
+            <div class="form-group">
+                <label>Nom du Voyageur Principal</label>
+                <input type="text" class="form-input" placeholder="Ex: Jean Dupont">
+            </div>
+            <div class="form-group">
+                <label>Époque Cible de Destination</label>
+                <input type="text" class="form-input" placeholder="Ex: Égypte Antique, An -1340">
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Durée du Séjour (Jours Temporels)</label>
+                    <input type="number" class="form-input" placeholder="Ex: 5">
+                </div>
+                <div class="form-group">
+                    <label>Classe de Voyage</label>
+                    <input type="text" class="form-input" placeholder="Ex: Première Classe / Explorateur">
+                </div>
+            </div>
+            <button class="btn-gold" style="width: 100%; margin-top: 20px;">Initier le saut temporel</button>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-cols">
+            <div class="footer-col">
+                <h4>Époques</h4>
+                <ul>
+                    <li><a href="#">Antiquité</a></li>
+                    <li><a href="#">Moyen-Âge</a></li>
+                    <li><a href="#">Préhistoire</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Sécurité</h4>
+                <ul>
+                    <li><a href="#">Régulation des paradoxes</a></li>
+                    <li><a href="#">Équipement de saut</a></li>
+                    <li><a href="#">Charte temporelle</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Agence</h4>
+                <ul>
+                    <li><a href="#">À propos de nous</a></li>
+                    <li><a href="#">Nos chronologues</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>IA Temporal</h4>
+                <p style="font-size: 12px; color: #475569; font-family: sans-serif;">Première agence mondiale de tourisme et d'exploration temporelle agréée.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 IA Temporal Inc. Tous droits réservés. Protégé par le Traité de Non-Prolifération Anachronique.
+        </div>
+    </footer>
 
 </body>
 </html>
+
